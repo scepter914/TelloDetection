@@ -1,7 +1,8 @@
 
-## TelloDetection
+## TelloFollowingPerson
 
-TelloDetection is sample code of conection between detection sample of chainercv and tellopy
+TelloFollowingPerson is application of drone following person.
+This is a sample code of conection between TelloPy and detection algorthm sample of ChainerCV.
 
 ## OS and library version
 
@@ -32,25 +33,7 @@ sudo pip3 install tellopy av opencv-python image chainer chainercv
 
 ## Docs
 
-### Detection
+- blog(Japanese)
 
-- from sample codes of chainercv
-
-
-## Examples
-
-### mesure_fps.py
-
-- meseaure FPS of detection from images of tello
-
-### following_person.py
-
-- application of following person
-
-### self_picture.py
-
-- application of taking self-picuture
-
-## Results
 
 
