@@ -33,20 +33,19 @@ class Detection():
             self.model.to_gpu()
         print("finish init detection")
 
-    def detection(self,image):
+    def detection(self, image):
         self.count += 1
         #img = utils.read_image(image, color=True)
-        #img = image
-        img = cv2.resize(image, (600, 400))
-        img = img[:, :, ::-1]  # BGR -> RGB
+        img = image
+        #img = image[:, :, ::-1]  # BGR -> RGB
         img = img.transpose((2, 0, 1))  # HWC -> CHW
-        self.bboxes, self.labels, self.scores = self.model.predict([img])
-        self.bbox, self.label, self.score = self.bboxes[0], self.labels[0], self.scores[0]
+        bboxes, labels, scores = self.model.predict([img])
+        self.bbox, self.label, self.score = bboxes[0], labels[0], scores[0]
         vis_bbox(img, self.bbox, self.label, self.score, label_names=voc_bbox_label_names)
-        plt.savefig("pic/" + str(self.count))
-        #print(self.bboxes)
-        print(self.labels)
-        #print(self.scores)
+        plt.savefig("pic/" + str(self.count) + "_detection")
+        #print(self.bbox)
+        #print(self.label)
+        #print(self.score)
         #print(img)
         #print(img.shape)
         img = img.transpose((1, 2, 0))
