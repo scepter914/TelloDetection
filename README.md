@@ -4,6 +4,13 @@
 TelloFollowingPerson is application of drone following person.
 This is a sample code of conection between TelloPy and detection algorthm sample of ChainerCV.
 
+## !! Caution !!
+
+- It is dangerous for a drone to fly automatically
+- You can use this code at your own risk
+    - Because of individual difference of drones, these codes always don't work well.
+    - When your drone fly, you should check if anyone wasn't around the drone.
+
 ## OS and library version
 
 - Ubuntu

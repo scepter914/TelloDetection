@@ -32,6 +32,7 @@ class Drone():
         try:
             self.drone.takeoff()
         except Exception as ex:
+            self.drone.land()
             self.drone.quit()
             print(ex)
 
@@ -40,6 +41,7 @@ class Drone():
         try:
             self.drone.land()
         except Exception as ex:
+            self.drone.land()
             self.drone.quit()
             print(ex)
         finally:
@@ -48,11 +50,64 @@ class Drone():
     # move
     def follow_person(self, bbox, label, score, threshold):
         try:
-            self.drone.down(50)
+            area_sum = 0.0
+            error_x = 0.0
+            error_y = 0.0
+            x_gain = 0.09
+            y_gain = 0.05
+            depth_gain = 0.0001
+
+            count_person = 0.0
+            for i in range(len(bbox)):
+                if label[i] == 14: #person
+                    area_sum += ((bbox[i][2] - bbox[i][0]) * (bbox[i][3] - bbox[i][1])) 
+                    error_x += ((bbox[i][1] + bbox[i][3] - self.width) / 2.0)
+                    error_y += ((bbox[i][0] + bbox[i][2] - self.height) / 2.0)
+                    count_person += 1.0
+            if count_person < 0.5:
+                #self.drone.quit()
+                print("no person")
+            else:
+                area_ave = area_sum / count_person
+                print(area_ave)
+                ave_error_x = error_x / count_person # x axis right
+                ave_error_y = -1.0 * error_y / count_person # y axis  down:plt -> up:drone control
+                control_x = 0.0
+                control_y = 0.0
+                control_depth = 0.0
+                # depth control
+                if area_sum > threshold:
+                    control_depth = depth_gain * (area_ave - threshold)
+                    self.drone.backward(int(control_depth))
+                    print("backward {0}".format(control_depth))
+                elif area_sum < threshold:
+                    control_depth = - depth_gain * (area_ave - threshold)
+                    self.drone.forward(int(control_depth))
+                    print("forward {0}".format(control_depth))
+
+                # x control
+                if ave_error_x > 0:
+                    control_x = x_gain * ave_error_x
+                    self.drone.right(int(control_x))
+                    print("right {0}".format(control_x))
+                if ave_error_x < 0:
+                    control_x = - x_gain * ave_error_x
+                    self.drone.left(int(control_x))
+                    print("left {0}".format(control_x))
+
+                # y control
+                if ave_error_y > 0:
+                    control_y = y_gain * ave_error_y
+                    self.drone.up(int(control_y))
+                    print("up {0}".format(control_y))
+                if ave_error_y < 0:
+                    control_y = - y_gain * ave_error_y
+                    self.drone.down(int(control_y))
+                    print("down {0}".format(control_y))
         except Exception as ex:
-            print(ex)
-        finally:
+            self.drone.land()
             self.drone.quit()
+            print(ex)
 
     def move_test(self, value):
         try:
@@ -61,6 +116,7 @@ class Drone():
             self.drone.forward(value)
             sleep(1)
         except Exception as ex:
+            self.drone.land()
             self.drone.quit()
             print(ex)
 
