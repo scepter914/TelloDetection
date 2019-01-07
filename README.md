@@ -42,5 +42,22 @@ sudo pip3 install tellopy av opencv-python image chainer chainercv
 
 - blog(Japanese)
 
+### Algorithm
+
+1. Initialize: the drone take off
+1. loop
+    1. The drone get a image and send hostPC
+    1. Detection task at hostPC and get position of person in the image
+    1. Control the actuation of the drone
+
+--- 
+
+### Control
+
+- ↑ ↓ → ← : control drone as object move center
+- Forward and Backward: Use size of bounding box
+    - bigger than a threshold : Backward 
+    - smaller than a threshold : Forward
+
 
 
