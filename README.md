@@ -55,7 +55,7 @@ sudo pip3 install tellopy av opencv-python image chainer chainercv
 
 ### Control
 
-- $B",(B $B"-(B $B"*(B $B"+(B : control drone as object move center
+- ↑ ↓ → ← : control drone as object move center
 - Forward and Backward: Use size of bounding box
     - bigger than a threshold : Backward 
     - smaller than a threshold : Forward
