@@ -41,6 +41,7 @@ sudo pip3 install tellopy av opencv-python image chainer chainercv
 ## Docs
 
 - blog(Japanese)
+    - <https://scepter914.github.io/blog/2019/20190107_tellodetection/>
 
 ### Algorithm
 
